@@ -326,6 +326,7 @@ you should place your code here."
 
   "April 2, 2018"
   ;; Note the following code was taken from this source: http://spacemacs.org/doc/VIMUSERS.html (!)
+
   ;; This snippet allows you to run clang-format before saving
   ;; given the current file as the correct filetype.
   ;; This relies on the c-c++ layer being enabled.
