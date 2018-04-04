@@ -1,6 +1,6 @@
 # Overview
 
-My custom [Spacemacs](https://github.com/syl20bnr/spacemacs) configuration files. Note that the init.el file is based on the default [.spacemacs file template](https://github.com/syl20bnr/spacemacs/blob/master/core/templates/.spacemacs.template) (as of April 2, 2018).
+My [Spacemacs](https://github.com/syl20bnr/spacemacs) configuration files. Note that the init.el file is based on the default [.spacemacs file template](https://github.com/syl20bnr/spacemacs/blob/master/core/templates/.spacemacs.template) (as of April 2, 2018).
 
 # To Use:
 
