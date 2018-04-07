@@ -41,24 +41,29 @@ values."
      ;; better-defaults
      emacs-lisp
      ;; git
-     ;; markdown
+     markdown
      ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
+     search-engine
      spell-checking
      ;; syntax-checking
      ;; version-control
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
-     ;; markdown
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(colemak-evil ergoemacs-mode clang-format) 
+   dotspacemacs-additional-packages
+   '(
+     clang-format
+     colemak-evil
+     ergoemacs-mode
+     )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -294,7 +299,19 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
+
+   ;; Set theme
+   dotspacemacs-themes '(manoj-dark)
+
+   ;; Configure ergoemacs
+   ergoemacs-theme nil
+   ergoemacs-keyboard-layout "colemak"
+
+   ;; Configure search engine
    dotspacemacs-whitespace-cleanup nil
+   browse-url-browser-function 'browse-url-generic
+   engine/browser-function 'browse-url-generic
+   browse-url-generic-program "firefox"
    ))
 
 (defun dotspacemacs/user-init ()
@@ -304,8 +321,6 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  "March 31, 2018"
-  (setq-default dotspacemacs-themes '(manoj-dark))
   )
 
 (defun dotspacemacs/user-config ()
@@ -316,15 +331,13 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  "March 31, 2018. This is needed (?); otherwise, the keys are not remapped"
+  ;; This manual require is needed; otherwise, the keys are not remapped
   (require 'colemak-evil)
 
-  "March 31, 2018"
-  (setq ergoemacs-theme nil)
-  (setq ergoemacs-keyboard-layout "colemak")
+  ;; Set ergoemacs mode
   (ergoemacs-mode 1)
 
-  "April 2, 2018"
+  ;; -------------------------
   ;; Note the following code was taken from this source: http://spacemacs.org/doc/VIMUSERS.html (!)
 
   ;; This snippet allows you to run clang-format before saving
@@ -340,6 +353,7 @@ in the filetypes list."
   ;; See http://www.gnu.org/software/emacs/manual/html_node/emacs/Hooks.html for
   ;; what this line means
   (add-hook 'before-save-hook 'clang-format-for-filetype)
+  ;; -------------------------
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
