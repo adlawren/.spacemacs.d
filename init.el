@@ -36,13 +36,20 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     helm
      ;; auto-completion
      ;; better-defaults
+     (c-c++ :variables
+            c-c++-default-mode-for-headers 'c++-mode
+            c-c++-enable-clang-support t)
      emacs-lisp
+     evernote
      ;; git
+     gnus
+     helm
      markdown
-     ;; org
+     org
+     python
+     ruby
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -50,9 +57,6 @@ values."
      spell-checking
      ;; syntax-checking
      ;; version-control
-     (c-c++ :variables
-            c-c++-default-mode-for-headers 'c++-mode
-            c-c++-enable-clang-support t)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -63,6 +67,7 @@ values."
      clang-format
      colemak-evil
      ergoemacs-mode
+     eww
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -309,10 +314,41 @@ values."
 
    ;; Configure search engine
    dotspacemacs-whitespace-cleanup nil
-   browse-url-browser-function 'browse-url-generic
-   engine/browser-function 'browse-url-generic
-   browse-url-generic-program "firefox"
-   ))
+
+   ;; Open all URLs in eww
+   browse-url-browser-function 'eww-browse-url
+   engine/browser-function 'eww-browse-url
+
+   ;; Configure gnus
+
+   ;; Get email, and store in nnml
+   gnus-secondary-select-methods '(
+                                   (nnimap "gmail"
+                                           (nnimap-address
+                                            "imap.gmail.com")
+                                           (nnimap-server-port 993)
+                                           (nnimap-stream ssl))
+                                   )
+
+   ;; Send email via Gmail:
+   message-send-mail-function 'smtpmail-send-it
+   smtpmail-default-smtp-server "smtp.gmail.com"
+
+   ;; Archive outgoing email in Sent folder on imap.gmail.com:
+   gnus-message-archive-method '(nnimap "imap.gmail.com")
+   gnus-message-archive-group "[Gmail]/Sent Mail"
+
+   ;; Set return email address based on incoming email address
+   gnus-posting-styles '(((header "to" "address@outlook.com")
+                          (address "address@outlook.com"))
+                         ((header "to" "address@gmail.com")
+                          (address "address@gmail.com")))
+
+   ;; Store email in ~/gmail directory
+   nnml-directory "~/gmail"
+   message-directory "~/gmail"
+   )
+  )
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -354,6 +390,15 @@ in the filetypes list."
   ;; what this line means
   (add-hook 'before-save-hook 'clang-format-for-filetype)
   ;; -------------------------
+
+  ;; Create a new search engine using the proper DuckDuckGo url
+  ;; Note: this is a workaround: https://github.com/syl20bnr/spacemacs/issues/7999#issuecomment-384022842
+  (let ((custom-search-engine '(custom1 :name "Custom Search Engine 1" :url "https://duckduckgo.com/html/?q=%s")))
+    (progn
+      (push custom-search-engine search-engine-alist)
+      (autoload (intern (format "engine/search-%S" (car custom-search-engine))) "engine-mode" nil 'interactive)
+      )
+    )
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
