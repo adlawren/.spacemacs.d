@@ -347,6 +347,9 @@ values."
    ;; Store email in ~/gmail directory
    nnml-directory "~/gmail"
    message-directory "~/gmail"
+
+   ;; Indicate the port on the smtp server to use
+   smtpmail-smtp-service 587
    )
   )
 
