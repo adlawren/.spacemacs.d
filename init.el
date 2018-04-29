@@ -50,10 +50,10 @@ values."
      org
      python
      ruby
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
      search-engine
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
      spell-checking
      ;; syntax-checking
      ;; version-control
@@ -360,6 +360,8 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
   )
 
 (defun dotspacemacs/user-config ()
