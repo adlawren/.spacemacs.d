@@ -48,6 +48,7 @@ values."
      helm
      markdown
      org
+     pandoc
      python
      ruby
      search-engine
