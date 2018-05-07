@@ -1,4 +1,4 @@
-;; -*- mode: emacs-lisp -*-
+﻿;; -*- mode: emacs-lisp -*-
 ;; This files is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -53,6 +53,7 @@ values."
      ruby
      search-engine
      (shell :variables
+            shell-default-shell 'shell
             shell-default-height 30
             shell-default-position 'bottom)
      slack
@@ -363,8 +364,15 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;; Add org-todo completion alternatives
   (setq org-todo-keywords
         '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+
+  ;; Configure aspell
+  (setq ispell-program-name "C:/Program Files (x86)/Aspell/bin/aspell.exe")
+
+  ;; Configure the inferior shell
+  (setq shell-file-name "C:/Program Files/Git/bin/bash.exe")
   )
 
 (defun dotspacemacs/user-config ()
@@ -409,7 +417,7 @@ in the filetypes list."
     )
 
   ;; Load external encrypted slack configuration
-  (load "/home/adlawren/.spacemacs.d/slack-config.el.gpg")
+  (load "~/.spacemacs.d/slack-config.el.gpg")
 
   ;; Configure org-page
   ;; Note: this code was implemented using the following for reference: http://codys.club/blog/2015/07/05/blogging-with-emacs-and-org-mode/
@@ -450,7 +458,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (org-category-capture org-plus-contrib org-page git mustache simple-httpd slack yapfify xterm-color ws-butler winum which-key websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode paradox pandoc-mode ox-pandoc org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file oauth2 neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gh-md geeknote flyspell-correct-helm flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ergoemacs-mode engine-mode emojify elisp-slime-nav dumb-jump disaster diminish define-word cython-mode column-enforce-mode colemak-evil cmake-mode clean-aindent-mode clang-format cl-generic circe chruby bundler auto-highlight-symbol auto-dictionary auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (ht markdown-mode dash-functional flyspell-correct inf-ruby pythonic alert log4e gntp org-category-capture org-plus-contrib org-page git mustache simple-httpd slack yapfify xterm-color ws-butler winum which-key websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode paradox pandoc-mode ox-pandoc org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file oauth2 neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gh-md geeknote flyspell-correct-helm flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ergoemacs-mode engine-mode emojify elisp-slime-nav dumb-jump disaster diminish define-word cython-mode column-enforce-mode colemak-evil cmake-mode clean-aindent-mode clang-format cl-generic circe chruby bundler auto-highlight-symbol auto-dictionary auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
