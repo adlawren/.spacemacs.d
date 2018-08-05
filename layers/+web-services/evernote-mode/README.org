@@ -1,0 +1,4 @@
+* Initial Setup
+Get an Evernote developer token, and add the following to the Spacemacs configuration file:
+
+(setq evernote-developer-token "your-evernote-developer-token")
