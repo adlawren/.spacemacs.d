@@ -1,0 +1,24 @@
+* Initial Setup
+In the Spacemacs config file, add the following:
+
+(require 'org-page)
+(setq op/repository-directory "/path/to/your/github/pages/repo")
+(setq op/site-domain "http://your.blog.url.com")
+(setq op/personal-github-link "https://github.com/your-github-username")
+(setq op/site-main-title "Blog Title")
+(setq op/site-sub-title "Blog subtitle")
+(setq op/personal-disqus-shortname "forum-handle")
+
+* Workflow
+- Checkout the 'source' branch in your blog git repository
+- Add the new post using <Space>-a-o-g-n
+- Enter appropriate responses to subsequent prompts, add content, save file
+- In the blog git repository:
+  - Commit the changes on the source branch (including the addition of the new post)
+  - Push the changes
+  - Run <Space>-a-o-g-p
+    - Provide the appropriate responses to the subsequent prompts (normally: y, n, y, y)
+
+* Acknowledgements
+
+Referential blog post: http://codys.club/blog/2015/07/05/blogging-with-emacs-and-org-mode/

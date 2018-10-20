@@ -43,19 +43,21 @@ values."
             c-c++-enable-clang-support t)
      emacs-lisp
      evernote-mode
-     ;; git
+     git
      gnus
      helm
+     html
      markdown
      org
+     org-page
      pandoc
+     php
      python
      ruby
      search-engine
+     semantic
      (shell :variables
-            shell-default-shell 'ansi-term
-            shell-default-height 30
-            shell-default-position 'bottom)
+            shell-default-shell 'eshell)
      slack
      spell-checking
      ;; syntax-checking
@@ -71,7 +73,6 @@ values."
      colemak-evil
      ergoemacs-mode
      eww
-     org-page
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -391,7 +392,7 @@ you should place your code here."
   (defun clang-format-for-filetype ()
       "Run clang-format if the current file has a file extensions
 in the filetypes list."
-      (let ((filetypes '("c" "cpp")))
+      (let ((filetypes '("c" "cpp" "hpp")))
         (when (member (file-name-extension (buffer-file-name)) filetypes)
           (clang-format-buffer))))
 
@@ -409,18 +410,21 @@ in the filetypes list."
       )
     )
 
-  ;; Load external encrypted accounts configuration file
-  (load "/home/adlawren/.spacemacs.d/accounts-config.el.gpg")
+  ;; Load external encrypted accounts configuration file - TODO: fix
+  ;;(load "/home/andrewl/.spacemacs.d/accounts-config.el.gpg")
 
   ;; Configure org-page
   ;; Note: this code was implemented using the following for reference: http://codys.club/blog/2015/07/05/blogging-with-emacs-and-org-mode/
   (require 'org-page)
-  (setq op/repository-directory "/home/adlawren/Git-Repos/adlawren.github.io.org")
+  (setq op/repository-directory "/home/andrewl/Git-Repos/adlawren.github.io")
   (setq op/site-domain "http://adlawren.github.io")
   (setq op/personal-github-link "https://github.com/adlawren")
   (setq op/site-main-title "Bits and Bytes")
   (setq op/site-sub-title "Notes from the deviant pursuits of a technical vagrant")
   (setq op/personal-disqus-shortname "adlawren")
+
+  ;; TODO: Configure semantic mode
+  (semantic-mode 1)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -452,7 +456,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (evernote-mode org-category-capture org-plus-contrib org-page git mustache simple-httpd slack yapfify xterm-color ws-butler winum which-key websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode paradox pandoc-mode ox-pandoc org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file oauth2 neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gh-md geeknote flyspell-correct-helm flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ergoemacs-mode engine-mode emojify elisp-slime-nav dumb-jump disaster diminish define-word cython-mode column-enforce-mode colemak-evil cmake-mode clean-aindent-mode clang-format cl-generic circe chruby bundler auto-highlight-symbol auto-dictionary auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (phpunit phpcbf php-extras php-auto-yasnippets yasnippet drupal-mode php-mode stickyfunc-enhance srefactor smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit ghub with-editor evernote-mode org-category-capture org-plus-contrib org-page git mustache simple-httpd slack yapfify xterm-color ws-butler winum which-key websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode paradox pandoc-mode ox-pandoc org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file oauth2 neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gh-md geeknote flyspell-correct-helm flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ergoemacs-mode engine-mode emojify elisp-slime-nav dumb-jump disaster diminish define-word cython-mode column-enforce-mode colemak-evil cmake-mode clean-aindent-mode clang-format cl-generic circe chruby bundler auto-highlight-symbol auto-dictionary auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
