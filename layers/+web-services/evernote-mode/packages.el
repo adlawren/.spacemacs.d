@@ -16,8 +16,8 @@
 (defconst evernote-mode-packages
   '(
     (evernote-mode :location (recipe
-                              :fetcher github
-                              :repo "pymander/evernote-mode"))
+                               :fetcher github
+                               :repo "pymander/evernote-mode"))
     ))
 
 (defun evernote-mode/init-evernote-mode ()
