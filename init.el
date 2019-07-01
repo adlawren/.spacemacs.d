@@ -41,10 +41,16 @@ values."
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
+     (shell :variables
+            shell-default-shell 'eshell)
+     clojure
+     common-lisp
+     csv
      emacs-lisp
      evernote-mode
      git
      gnus
+     go
      haskell
      helm
      html
@@ -55,14 +61,16 @@ values."
      php
      python
      ruby
+     rust
+     scheme
      search-engine
      semantic
-     (shell :variables
-            shell-default-shell 'eshell)
+     shell-scripts
      slack
      spell-checking
      ;; syntax-checking
      ;; version-control
+     yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -324,6 +332,8 @@ values."
    ;; Open all URLs in eww
    ;; browse-url-browser-function 'eww-browse-url
    ;; engine/browser-function 'eww-browse-url
+   browse-url-browser-function 'browse-url-default-browser
+   engine/browser-function 'browse-url-default-browser
 
    ;; Configure gnus
 
@@ -426,6 +436,10 @@ in the filetypes list."
 
   ;; TODO: Configure semantic mode
   (semantic-mode 1)
+
+  ;; Use Chicken in Scheme layer
+  (setq geiser-active-implementations '(chicken))
+  (setq geiser-chicken-binary "chicken-csi")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -457,7 +471,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (intero company-ghci company-ghc ghc flycheck hlint-refactor hindent helm-hoogle haskell-snippets company haskell-mode cmm-mode web-mode tagedit powerline slim-mode scss-mode sass-mode pug-mode pcre2el spinner ht markdown-mode hydra dash-functional parent-mode projectile pkg-info epl helm-css-scss haml-mode flyspell-correct flx treepy graphql smartparens iedit anzu highlight emmet-mode evil goto-chg undo-tree inf-ruby bind-map bind-key packed pythonic f dash s alert log4e gntp helm avy helm-core popup async phpunit phpcbf php-extras php-auto-yasnippets yasnippet drupal-mode php-mode stickyfunc-enhance srefactor smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit ghub with-editor evernote-mode org-category-capture org-plus-contrib org-page git mustache simple-httpd slack yapfify xterm-color ws-butler winum which-key websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode paradox pandoc-mode ox-pandoc org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file oauth2 neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gh-md geeknote flyspell-correct-helm flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ergoemacs-mode engine-mode emojify elisp-slime-nav dumb-jump disaster diminish define-word cython-mode column-enforce-mode colemak-evil cmake-mode clean-aindent-mode clang-format cl-generic circe chruby bundler auto-highlight-symbol auto-dictionary auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (geiser clj-refactor inflections edn multiple-cursors paredit cider sesman queue parseedn peg parseclj clojure-mode lv cider-eval-sexp-fu a slime-company slime go-guru go-eldoc go-mode toml-mode racer pos-tip cargo rust-mode yaml-mode csv-mode intero company-ghci company-ghc ghc flycheck hlint-refactor hindent helm-hoogle haskell-snippets company haskell-mode cmm-mode web-mode tagedit powerline slim-mode scss-mode sass-mode pug-mode pcre2el spinner ht markdown-mode hydra dash-functional parent-mode projectile pkg-info epl helm-css-scss haml-mode flyspell-correct flx treepy graphql smartparens iedit anzu highlight emmet-mode evil goto-chg undo-tree inf-ruby bind-map bind-key packed pythonic f dash s alert log4e gntp helm avy helm-core popup async phpunit phpcbf php-extras php-auto-yasnippets yasnippet drupal-mode php-mode stickyfunc-enhance srefactor smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit ghub with-editor evernote-mode org-category-capture org-plus-contrib org-page git mustache simple-httpd slack yapfify xterm-color ws-butler winum which-key websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode paradox pandoc-mode ox-pandoc org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file oauth2 neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gh-md geeknote flyspell-correct-helm flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ergoemacs-mode engine-mode emojify elisp-slime-nav dumb-jump disaster diminish define-word cython-mode column-enforce-mode colemak-evil cmake-mode clean-aindent-mode clang-format cl-generic circe chruby bundler auto-highlight-symbol auto-dictionary auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
