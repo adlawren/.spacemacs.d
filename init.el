@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     ansible
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -41,8 +42,6 @@ values."
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
-     (shell :variables
-            shell-default-shell 'eshell)
      clojure
      colemak-evil
      ;;common-lisp
@@ -73,6 +72,30 @@ values."
      ;; scheme
      ;; search-engine
      semantic
+     ;; common-lisp
+     csv
+     emacs-lisp
+     git
+     gnus
+     go
+     helm
+     html
+     jabber
+     javascript
+     (markdown :variables markdown-live-preview-engine 'vmd)
+     nginx
+     org
+     pandoc
+     python
+     ruby
+     ruby-on-rails
+     rust
+     scheme
+     search-engine
+     (shell :variables
+            shell-default-shell 'eshell
+            shell-default-height 30
+            shell-default-position 'bottom)
      shell-scripts
      ;; slack
      spell-checking
@@ -96,6 +119,8 @@ values."
      ergoemacs-mode
      ;; eww
      writegood-mode
+     org-page
+     pomodoro
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -178,11 +203,11 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   ;; dotspacemacs-default-font '("Source Code Pro"
-   ;;                             :size 13
-   ;;                             :weight normal
-   ;;                             :width normal
-   ;;                             :powerline-scale 1.1)
+   dotspacemacs-default-font '("Source Code Pro"
+                               :size 18
+                               :weight normal
+                               :width normal
+                               :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -350,8 +375,6 @@ values."
    ;; Open all URLs in eww
    ;; browse-url-browser-function 'eww-browse-url
    ;; engine/browser-function 'eww-browse-url
-   browse-url-browser-function 'browse-url-default-browser
-   engine/browser-function 'browse-url-default-browser
 
    ;; Configure gnus
 
@@ -384,6 +407,17 @@ values."
 
    ;; Indicate the port on the smtp server to use
    smtpmail-smtp-service 587
+
+   ;; Set indentation size in Javascript mode
+   ;;js-indent-level 2
+
+   standard-indent 2
+
+   ;; TODO: Set magit git commit max columns - figure out why this didn't work?
+   ;;fill-column 72
+
+   gofmt-command "goimports"
+   godoc-and-godef-command "go doc"
    )
   )
 
@@ -397,6 +431,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq org-todo-keywords
         '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
   (setq openai-key (getenv "OPENAI_API_KEY"))
+
+  (setq ispell-program-name "/usr/local/bin/aspell")
+
+  (setq geiser-active-implementations '(guile))
   )
 
 (defun dotspacemacs/user-config ()
@@ -406,6 +444,13 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  ;; Set up pomodoro
+  (require 'pomodoro)
+  (pomodoro-add-to-mode-line)
+  (setq pomodoro-sound-player "afplay")
+
+  ;; This manual require is needed; otherwise, the keys are not remapped
+  (require 'colemak-evil)
 
   ;; Set ergoemacs mode
   (ergoemacs-mode 1)
@@ -419,7 +464,7 @@ you should place your code here."
   (defun clang-format-for-filetype ()
       "Run clang-format if the current file has a file extensions
 in the filetypes list."
-      (let ((filetypes '("c" "cpp" "hpp")))
+      (let ((filetypes '("c" "cpp")))
         (when (member (file-name-extension (buffer-file-name)) filetypes)
           (clang-format-buffer))))
 
@@ -464,6 +509,28 @@ in the filetypes list."
   (setq helm-locate-command "locate %s --regex %s")
 
   (setq exec-path (append exec-path '("~/.nvm/versions/node/v16.13.0/bin")))
+  ;; TODO: Configure TRAMP
+  ;; (add-to-list 'tramp-remote-path "/opt/opadmin/embedded/ruby2.4.1/bin")
+  ;; (add-to-list 'tramp-remote-path "/opt/opadmin/embedded/bin")
+  ;; (add-to-list 'tramp-remote-path "/opt/fire/embedded/bin")
+  ;; (add-to-list 'tramp-remote-path "/opt/fire/extra/rabbitmq/sbin")
+  ;; (add-to-list 'tramp-remote-path "/opt/fire/bin")
+  ;; (add-to-list 'tramp-remote-path "/opt/fire/embedded/bin")
+  ;; (add-to-list 'tramp-remote-path "/opt/opadmin/embedded/bin")
+  ;; (add-to-list 'tramp-remote-path "/opt/fire/extra/rabbitmq/sbin")
+  ;; (add-to-list 'tramp-remote-path "/opt/fire/bin")
+  ;; (add-to-list 'tramp-remote-path "/usr/lib64/qt-3.3/bin")
+  ;; (add-to-list 'tramp-remote-path "/usr/local/sbin")
+  ;; (add-to-list 'tramp-remote-path "/usr/local/bin")
+  ;; (add-to-list 'tramp-remote-path "/usr/sbin")
+  ;; (add-to-list 'tramp-remote-path "/usr/bin")
+  ;; (add-to-list 'tramp-remote-path "/root/bin")
+
+  ;; (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+
+  ;; Disable go-play upload to avoid accidentally uploading proprietary stuff
+  (put 'go-play-buffer 'disabled t)
+  (put 'go-play-region 'disabled t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -493,9 +560,12 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol nil)
+ '(org-modules
+   (quote
+    (org-bbdb org-bibtex org-docview org-gnus org-info org-irc org-mhe org-rmail org-w3m org-drill)))
  '(package-selected-packages
-   '(geiser clj-refactor inflections edn multiple-cursors paredit cider sesman queue parseedn peg parseclj clojure-mode lv cider-eval-sexp-fu a slime-company slime go-guru go-eldoc go-mode toml-mode racer pos-tip cargo rust-mode yaml-mode csv-mode intero company-ghci company-ghc ghc flycheck hlint-refactor hindent helm-hoogle haskell-snippets company haskell-mode cmm-mode web-mode tagedit powerline slim-mode scss-mode sass-mode pug-mode pcre2el spinner ht markdown-mode hydra dash-functional parent-mode projectile pkg-info epl helm-css-scss haml-mode flyspell-correct flx treepy graphql smartparens iedit anzu highlight emmet-mode evil goto-chg undo-tree inf-ruby bind-map bind-key packed pythonic f dash s alert log4e gntp helm avy helm-core popup async phpunit phpcbf php-extras php-auto-yasnippets yasnippet drupal-mode php-mode stickyfunc-enhance srefactor smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit ghub with-editor evernote-mode org-category-capture org-plus-contrib org-page git mustache simple-httpd slack yapfify xterm-color ws-butler winum which-key websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode paradox pandoc-mode ox-pandoc org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file oauth2 neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gh-md geeknote flyspell-correct-helm flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ergoemacs-mode engine-mode emojify elisp-slime-nav dumb-jump disaster diminish define-word cython-mode column-enforce-mode colemak-evil cmake-mode clean-aindent-mode clang-format cl-generic circe chruby bundler auto-highlight-symbol auto-dictionary auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+   (quote
+    (jinja2-mode ansible-doc ansible pomodoro toml-mode racer pos-tip cargo rust-mode geiser clj-refactor edn paredit peg cider sesman queue parseedn parseclj clojure-mode lv cider-eval-sexp-fu a slime-company company slime insert-shebang fish-mode csv-mode nginx-mode web-beautify livid-mode skewer-mode json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit ghub let-alist with-editor go-guru go-eldoc go-mode projectile-rails inflections feature-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode vmd-mode yaml-mode reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl jabber fsm ht markdown-mode dash-functional flyspell-correct inf-ruby pythonic alert log4e gntp org-category-capture org-plus-contrib org-page git mustache simple-httpd slack yapfify xterm-color ws-butler winum which-key websocket volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs request rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode paradox pandoc-mode ox-pandoc org-projectile org-present org-pomodoro org-mime org-download org-bullets open-junk-file oauth2 neotree multi-term move-text mmm-mode minitest markdown-toc macrostep lorem-ipsum live-py-mode linum-relative link-hint indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot gh-md geeknote flyspell-correct-helm flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ergoemacs-mode engine-mode emojify elisp-slime-nav dumb-jump disaster diminish define-word cython-mode column-enforce-mode colemak-evil cmake-mode clean-aindent-mode clang-format cl-generic circe chruby bundler auto-highlight-symbol auto-dictionary auto-compile anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
