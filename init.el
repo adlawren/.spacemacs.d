@@ -44,29 +44,34 @@ values."
      (shell :variables
             shell-default-shell 'eshell)
      clojure
-     common-lisp
+     ;;common-lisp
      csv
      emacs-lisp
-     evernote-mode
+     ;; evernote-mode
      git
-     gnus
-     go
+     ;; github
+     ;; gnus
+     (go :variables
+         go-format-before-save t
+         gofmt-command "goimports")
      haskell
      helm
      html
      markdown
      org
-     org-page
-     pandoc
-     php
+     ;; org-page
+     ;; pandoc
+     ;; php
      python
-     ruby
-     rust
-     scheme
+     (ruby :variables
+           ruby-version-manager 'rbenv
+           ruby-test-runner 'rspec)
+     ;; rust
+     ;; scheme
      search-engine
      semantic
      shell-scripts
-     slack
+     ;; slack
      spell-checking
      ;; syntax-checking
      ;; version-control
@@ -160,11 +165,11 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
-                               :weight normal
-                               :width normal
-                               :powerline-scale 1.1)
+   ;; dotspacemacs-default-font '("Source Code Pro"
+   ;;                             :size 13
+   ;;                             :weight normal
+   ;;                             :width normal
+   ;;                             :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -287,7 +292,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers 'relative
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -426,13 +431,13 @@ in the filetypes list."
 
   ;; Configure org-page
   ;; Note: this code was implemented using the following for reference: http://codys.club/blog/2015/07/05/blogging-with-emacs-and-org-mode/
-  (require 'org-page)
-  (setq op/repository-directory "/home/andrewl/Git-Repos/adlawren.github.io")
-  (setq op/site-domain "http://adlawren.github.io")
-  (setq op/personal-github-link "https://github.com/adlawren")
-  (setq op/site-main-title "Bits and Bytes")
-  (setq op/site-sub-title "Notes from the deviant pursuits of a technical vagrant")
-  (setq op/personal-disqus-shortname "adlawren")
+  ;; (require 'org-page)
+  ;; (setq op/repository-directory "/home/andrewl/Git-Repos/adlawren.github.io")
+  ;; (setq op/site-domain "http://adlawren.github.io")
+  ;; (setq op/personal-github-link "https://github.com/adlawren")
+  ;; (setq op/site-main-title "Bits and Bytes")
+  ;; (setq op/site-sub-title "Notes from the deviant pursuits of a technical vagrant")
+  ;; (setq op/personal-disqus-shortname "adlawren")
 
   ;; TODO: Configure semantic mode
   (semantic-mode 1)
@@ -440,6 +445,13 @@ in the filetypes list."
   ;; Use Chicken in Scheme layer
   (setq geiser-active-implementations '(chicken))
   (setq geiser-chicken-binary "chicken-csi")
+
+  ;; Source-ish: https://develop.spacemacs.org/doc/DOCUMENTATION.html#binding-keys
+  (define-key evil-normal-state-map (kbd "k") 'evil-ex-search-next)
+  (define-key evil-normal-state-map (kbd "K") 'evil-ex-search-previous)
+
+  (setq helm-locate-command "locate %s --regex %s")
+  (spacemacs/loadenv)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
