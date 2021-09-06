@@ -1,0 +1,7 @@
+* Initial Setup
+
+Install goimports: 
+
+#+BEGIN_SRC sh
+go install golang.org/x/tools/cmd/goimports@latest
+#+END_SRC
