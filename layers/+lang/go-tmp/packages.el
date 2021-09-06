@@ -20,7 +20,6 @@
                        :repo "adlawren/go-tmp.el"))))
 
 (defun go-tmp/init-go-tmp ()
-  "Initialize go-tmp"
   (use-package go-tmp
     :init
     (progn

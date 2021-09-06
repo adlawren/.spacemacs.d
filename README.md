@@ -11,14 +11,18 @@ My [Spacemacs](https://github.com/syl20bnr/spacemacs) configuration files. Note 
 
 # Custom Layers
 
+### colemak-evil
+
+Adds keybindings from `colemak-evil` package: https://github.com/adlawren/colemak-evil
+
 ### evernote-mode
 
 Adds keybindings for the `evernote-mode` package: https://github.com/pymander/evernote-mode
 
-### org-page
-
-Adds keybindings for the `org-page` package: https://github.com/kelvinh/org-page
-
 ### go-tmp
 
 Adds keybindings to `go-mode` for the `go-tmp` package: https://github.com/adlawren/go-tmp.el
+
+### org-page
+
+Adds keybindings for the `org-page` package: https://github.com/kelvinh/org-page
