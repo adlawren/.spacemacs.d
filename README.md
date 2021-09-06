@@ -13,8 +13,12 @@ My [Spacemacs](https://github.com/syl20bnr/spacemacs) configuration files. Note 
 
 ### evernote-mode
 
-Adds keybindings for the evernote-mode package: https://github.com/pymander/evernote-mode
+Adds keybindings for the `evernote-mode` package: https://github.com/pymander/evernote-mode
 
 ### org-page
 
-Adds keybindings for the org-page package: https://github.com/kelvinh/org-page
+Adds keybindings for the `org-page` package: https://github.com/kelvinh/org-page
+
+### go-tmp
+
+Adds keybindings to `go-mode` for the `go-tmp` package: https://github.com/adlawren/go-tmp.el
