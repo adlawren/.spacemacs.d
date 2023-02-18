@@ -59,6 +59,7 @@ values."
      haskell
      helm
      html
+     javascript
      markdown
      org
      ;; org-page
@@ -88,6 +89,7 @@ values."
      clang-format
      ergoemacs-mode
      eww
+     writegood-mode
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
