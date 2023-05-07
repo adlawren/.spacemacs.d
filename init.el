@@ -36,7 +36,7 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
+     auto-completion
      ;; better-defaults
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
@@ -56,7 +56,7 @@ values."
          go-format-before-save t
          gofmt-command "goimports")
      go-tmp
-     haskell
+     ;; haskell
      helm
      html
      javascript
@@ -71,7 +71,7 @@ values."
            ruby-test-runner 'rspec)
      ;; rust
      ;; scheme
-     search-engine
+     ;; search-engine
      semantic
      shell-scripts
      ;; slack
@@ -88,8 +88,13 @@ values."
    '(
      chatgpt
      clang-format
+     (copilot :location (recipe
+                         :fetcher github
+                         :repo "adlawren/copilot.el"
+                         :branch "main-fork"
+                         :files ("*.el" "dist")))
      ergoemacs-mode
-     eww
+     ;; eww
      writegood-mode
      )
    ;; A list of packages that cannot be updated.
@@ -425,12 +430,12 @@ in the filetypes list."
 
   ;; Create a new search engine using the proper DuckDuckGo url
   ;; Note: this is a workaround: https://github.com/syl20bnr/spacemacs/issues/7999#issuecomment-384022842
-  (let ((custom-search-engine '(custom1 :name "Custom Search Engine 1" :url "https://duckduckgo.com/html/?q=%s")))
-    (progn
-      (push custom-search-engine search-engine-alist)
-      (autoload (intern (format "engine/search-%S" (car custom-search-engine))) "engine-mode" nil 'interactive)
-      )
-    )
+  ;; (let ((custom-search-engine '(custom1 :name "Custom Search Engine 1" :url "https://duckduckgo.com/html/?q=%s")))
+  ;;   (progn
+  ;;     (push custom-search-engine search-engine-alist)
+  ;;     (autoload (intern (format "engine/search-%S" (car custom-search-engine))) "engine-mode" nil 'interactive)
+  ;;     )
+  ;;   )
 
   ;; Load external encrypted accounts configuration file - TODO: fix
   ;;(load "/home/andrewl/.spacemacs.d/accounts-config.el.gpg")
@@ -449,14 +454,16 @@ in the filetypes list."
   (semantic-mode 1)
 
   ;; Use Chicken in Scheme layer
-  (setq geiser-active-implementations '(chicken))
-  (setq geiser-chicken-binary "chicken-csi")
+  ;; (setq geiser-active-implementations '(chicken))
+  ;; (setq geiser-chicken-binary "chicken-csi")
 
   ;; Source-ish: https://develop.spacemacs.org/doc/DOCUMENTATION.html#binding-keys
   (define-key evil-normal-state-map (kbd "k") 'evil-ex-search-next)
   (define-key evil-normal-state-map (kbd "K") 'evil-ex-search-previous)
 
   (setq helm-locate-command "locate %s --regex %s")
+
+  (setq exec-path (append exec-path '("~/.nvm/versions/node/v16.13.0/bin")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
