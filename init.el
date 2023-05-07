@@ -116,7 +116,7 @@ values."
                          :repo "adlawren/copilot.el"
                          :branch "main-fork"
                          :files ("*.el" "dist")))
-     ergoemacs-mode
+     ;; ergoemacs-mode
      ;; eww
      writegood-mode
      org-page
@@ -366,8 +366,8 @@ values."
    dotspacemacs-themes '(manoj-dark)
 
    ;; Configure ergoemacs
-   ergoemacs-theme nil
-   ergoemacs-keyboard-layout "colemak"
+   ;; ergoemacs-theme nil
+   ;; ergoemacs-keyboard-layout "colemak"
 
    ;; Configure search engine
    dotspacemacs-whitespace-cleanup nil
@@ -453,7 +453,7 @@ you should place your code here."
   (require 'colemak-evil)
 
   ;; Set ergoemacs mode
-  (ergoemacs-mode 1)
+  ;; (ergoemacs-mode 1)
 
   ;; -------------------------
   ;; Note the following code was taken from this source: http://spacemacs.org/doc/VIMUSERS.html (!)
@@ -508,7 +508,7 @@ in the filetypes list."
 
   (setq helm-locate-command "locate %s --regex %s")
 
-  (setq exec-path (append exec-path '("~/.nvm/versions/node/v16.13.0/bin")))
+  (setq exec-path (append exec-path '("~/.nodenv/shims")))
   ;; TODO: Configure TRAMP
   ;; (add-to-list 'tramp-remote-path "/opt/opadmin/embedded/ruby2.4.1/bin")
   ;; (add-to-list 'tramp-remote-path "/opt/opadmin/embedded/bin")
