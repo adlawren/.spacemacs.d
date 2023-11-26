@@ -93,7 +93,7 @@ values."
                          :repo "adlawren/copilot.el"
                          :branch "main-fork"
                          :files ("*.el" "dist")))
-     ergoemacs-mode
+     ;; ergoemacs-mode
      ;; eww
      writegood-mode
      )
@@ -341,8 +341,8 @@ values."
    dotspacemacs-themes '(manoj-dark)
 
    ;; Configure ergoemacs
-   ergoemacs-theme nil
-   ergoemacs-keyboard-layout "colemak"
+   ;; ergoemacs-theme nil
+   ;; ergoemacs-keyboard-layout "colemak"
 
    ;; Configure search engine
    dotspacemacs-whitespace-cleanup nil
@@ -408,7 +408,7 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   ;; Set ergoemacs mode
-  (ergoemacs-mode 1)
+  ;; (ergoemacs-mode 1)
 
   ;; -------------------------
   ;; Note the following code was taken from this source: http://spacemacs.org/doc/VIMUSERS.html (!)
